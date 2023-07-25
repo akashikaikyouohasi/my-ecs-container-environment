@@ -9,3 +9,7 @@
 ## CodePipeline
 
 ## ecspresso
+
+## マルチアカウント
+DEV/STG/PRDなどアカウントを分けてデプロイできる
+
