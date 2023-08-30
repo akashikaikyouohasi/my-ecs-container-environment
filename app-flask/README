@@ -1,0 +1,12 @@
+## メモ
+#### Docker start
+`docker compose up --build -d`
+### connnect mysql: pasword -> docker_compose.yml
+`mysql -u root -p -h 127.0.0.1 -P 3306`
+
+### test
+http://localhost:5000
+
+
+## 参考
+https://qiita.com/ichi_zamurai/items/9e449603e39e8054e301
