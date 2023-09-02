@@ -12,9 +12,18 @@ services:
     command: python app.py
     # command: flask run --host=0.0.0.0
   db:
-    container_name: "db"
+    container_name: "db-mysql"
     image: mysql:8
     ports:
       - "3306:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: ${MYSQL_DATABASE}       # 作成するデータベース名
+      MYSQL_USER: ${MYSQL_USER}            # 作業ユーザー名→上記データベースの捜査権限をもつ
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}        # 作業ユーザーのパスワード
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      TZ: "Asia/Tokyo"
+  manage:
+    build:
+      context: .
+      dockerfile: ./docker/manage/Dockerfile
+    command: tail -F /dev/null

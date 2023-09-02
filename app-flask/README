@@ -3,6 +3,7 @@
 `docker compose up --build -d`
 ### connnect mysql: pasword -> docker_compose.yml
 `mysql -u root -p -h 127.0.0.1 -P 3306`
+`mysql -u user1 -p -h db-mysql -P 3306`
 
 ### test
 http://localhost:5000

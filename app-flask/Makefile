@@ -1,7 +1,12 @@
 clean:
 	docker-compose down
 build:
+	make init
 	docker-compose up -d --build
+init:
+	docker-compose up -d --build db
+	sleep 10
+	mysql -u user1 -p -h 127.0.0.1 -P 3306 < db/init.sql
 up:
 	docker-compose up -d 
 ps:

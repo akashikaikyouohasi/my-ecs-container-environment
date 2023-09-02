@@ -7,6 +7,9 @@ from dotenv import load_dotenv
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
 
+# application
+API_KEY = os.environ.get("API_KEY")
+
 # MySQL config
 MYSQL_ROOT_PASSWORD = os.environ.get("MYSQL_ROOT_PASSWORD")
 MYSQL_HOST = os.environ.get("MYSQL_HOST")
