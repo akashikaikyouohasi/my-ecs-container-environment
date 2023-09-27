@@ -112,20 +112,27 @@ resource "aws_security_group_rule" "sg_rule" {
 }
 
 #########################
-# エンドポイント
+# NAT Gateway
 #########################
-resource "aws_vpc_endpoint" "s3" {
-
-  vpc_endpoint_type = "Gateway"
-  service_name      = "com.amazonaws.ap-northeast-1.s3"
-  vpc_id            = aws_vpc.vpc.id
-
-  tags = {
-    Name = local.endpoint_s3_gateway.name
-  }
+# EIP
+resource "aws_eip" "nat_gateway" {
+  domain = "vpc"
 }
 
-resource "aws_vpc_endpoint_route_table_association" "s3_vpcendpoint" {
-  route_table_id  = aws_route_table.private_route_table[local.endpoint_s3_gateway.route_table_name].id
-  vpc_endpoint_id = aws_vpc_endpoint.s3.id
+# NAT Gateway
+resource "aws_nat_gateway" "private" {
+  for_each = local.nat_gateway
+
+  allocation_id = aws_eip.nat_gateway.id
+  subnet_id     = aws_subnet.public_subnets[each.key].id
+
+  depends_on = [aws_internet_gateway.igw]
+}
+
+resource "aws_route" "nat_gateway" {
+  for_each = local.nat_gateway
+
+  destination_cidr_block = "0.0.0.0/0"
+  route_table_id  = aws_route_table.private_route_table[each.value.route_teble_name].id
+  gateway_id = aws_nat_gateway.private[each.key].id
 }

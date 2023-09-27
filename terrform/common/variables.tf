@@ -97,9 +97,11 @@ locals {
 }
 
 locals {
-  endpoint_s3_gateway = {
-    name             = "sbcntr-vpce-s3"
-    route_table_name = "app"
+  nat_gateway = {
+    public-1a = {
+      name = "${var.name}-nat-gateway"
+      route_teble_name = "app"
+    }
   }
 }
 
