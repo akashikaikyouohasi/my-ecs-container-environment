@@ -133,6 +133,6 @@ resource "aws_route" "nat_gateway" {
   for_each = local.nat_gateway
 
   destination_cidr_block = "0.0.0.0/0"
-  route_table_id  = aws_route_table.private_route_table[each.value.route_teble_name].id
-  gateway_id = aws_nat_gateway.private[each.key].id
+  route_table_id         = aws_route_table.private_route_table[each.value.route_teble_name].id
+  gateway_id             = aws_nat_gateway.private[each.key].id
 }

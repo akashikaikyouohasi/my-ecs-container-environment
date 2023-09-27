@@ -103,7 +103,7 @@ locals {
 locals {
   nat_gateway = {
     public-1a = {
-      name = "${var.name}-nat-gateway"
+      name             = "${var.name}-nat-gateway"
       route_teble_name = "app"
     }
   }
