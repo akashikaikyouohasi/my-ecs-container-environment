@@ -1,3 +1,5 @@
+include .env
+
 clean:
 	docker-compose down
 build:
@@ -6,7 +8,7 @@ build:
 init:
 	docker-compose up -d --build db
 	sleep 10
-	mysql -u user1 -p -h 127.0.0.1 -P 3306 < db/init.sql
+	mysql -u ${MYSQL_USER} -p -h 127.0.0.1 -P 3306 -p${MYSQL_PASSWORD} < db/init.sql
 up:
 	docker-compose up -d 
 ps:

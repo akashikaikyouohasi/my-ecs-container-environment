@@ -11,3 +11,4 @@ flask-marshmallow==0.15.0
 marshmallow-sqlalchemy==0.29.0
 Flask-Migrate==4.0.4
 Flask-Seeder==1.2.0
+cryptography==41.0.4

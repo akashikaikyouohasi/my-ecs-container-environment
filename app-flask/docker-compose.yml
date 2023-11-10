@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: ./docker/web/Dockerfile
     ports:
-      - "5000:5000"
+      - "80:80"
     container_name: app
     volumes:
       - ./app/:/app
