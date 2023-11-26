@@ -3,7 +3,7 @@
     {
       "cpu": 256,
       "essential": true,
-      "image": "206863353204.dkr.ecr.ap-northeast-1.amazonaws.com/flask-test-app:v6",
+      "image": "206863353204.dkr.ecr.ap-northeast-1.amazonaws.com/flask-test-app:{{ must_env `IMAGE_TAG` }}",
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
