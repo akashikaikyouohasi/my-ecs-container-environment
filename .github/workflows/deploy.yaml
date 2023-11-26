@@ -5,7 +5,8 @@ on:
     types: [closed]
 
 env:
-  AWS_ROLE_ARN: hogehoge
+  AWS_ACCOUNT_ID: ${{ vars.AWS_ACCOUNT_ID }}
+  AWS_IAM_ROLE_NAME: ${{ var.AWS_IAM_ROLE_NAME }}
 
 jobs:
   deploy:
