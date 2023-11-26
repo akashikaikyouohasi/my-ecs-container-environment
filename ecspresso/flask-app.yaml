@@ -1,0 +1,6 @@
+region: ap-northeast-1
+cluster: flask-test-cluster
+service: flask-test-ecs-service2
+service_definition: ecs-service-def.json
+task_definition: ecs-task-def.json
+timeout: "10m0s"
