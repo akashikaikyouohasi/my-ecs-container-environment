@@ -80,6 +80,27 @@ data "aws_iam_policy_document" "ecr_ecs_deploy" {
     ]
   }
   statement {
+    sid = "AutoScaling"
+    effect = "Allow"
+    actions = [
+      "application-autoscaling:Describe*",
+      "application-autoscaling:Register*",
+      "codedeploy:BatchGet*",
+      "codedeploy:CreateDeployment",
+      "codedeploy:List*",
+      "ecs:*",
+      "elasticloadbalancing:DescribeTargetGroups",
+      "iam:GetRole",
+      "logs:GetLogEvents",
+      "secretsmanager:GetSecretValue",
+      "servicediscovery:GetNamespace",
+      "ssm:GetParameter",
+    ]
+    resources = [
+      "*"
+    ]
+  }
+  statement {
     sid = "passrole"
     effect = "Allow"
     actions = [
