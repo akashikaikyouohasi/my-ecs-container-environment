@@ -11,7 +11,7 @@ RUN pip install -r requirements.txt
 #FROM gcr.io/distroless/python3-debian12
 FROM python:3.11-slim
 
-COPY ./app-flask/app/ /
+COPY ./app-flask/app/ /app/
 
 WORKDIR /app
 
