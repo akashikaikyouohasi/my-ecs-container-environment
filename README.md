@@ -5,7 +5,7 @@
 GitHubの`Secrets and variables`から設定してください！
 - variable
     - AWS_ACCOUNT_ID
-    - AWS_IAM_ROLE_NAME（GitHub Actionsで利用するIAMロール名）
+    - AWS_IAM_ROLE_ARN Actionsで利用するIAMロール ARN）
 
 
 # 手動コマンド集
