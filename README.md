@@ -13,7 +13,7 @@ GitHubの`Secrets and variables`から設定してください！
 ```
 export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query 'Account' --output text)
 
-docker build -t app-flask-build-container:latest -f ./docker/build/Dockerfile --platform linux/x86_64 .
+docker build -t app-flask-build-container:latest -f ./app-flask/docker/build/Dockerfile --platform linux/x86_64 .
 
 docker image tag app-flask-build-container:latest ${AWS_ACCOUNT_ID}.dkr.ecr.ap-northeast-1.amazonaws.com/flask-test-app:v3
 ```
