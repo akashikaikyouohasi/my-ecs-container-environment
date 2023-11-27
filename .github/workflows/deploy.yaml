@@ -40,7 +40,7 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
         run: |
           docker build -t ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }} -f  ./app-flask/docker/build/Dockerfile --platform linux/x86_64 . 
-          docker push ${{ REGISTRY }}/${{ REPOSITORY }}:${{ IMAGE_TAG }}
+          docker push ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
       # デプロイ実行環境準備
       - uses: kayac/ecspresso@v2
         with:
