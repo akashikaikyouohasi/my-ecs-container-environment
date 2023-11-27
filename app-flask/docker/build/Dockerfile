@@ -14,4 +14,4 @@ FROM python:3.11-slim
 COPY ./app-flask/ /
 COPY --from=builder /usr/local/lib/python3.11/site-packages /root/.local/lib/python3.11/site-packages
 
-ENTRYPOINT ["/usr/local/bin/python3", "/app-flask/app.py"]
+ENTRYPOINT ["/usr/local/bin/python3", "/app-flask/app/app.py"]
