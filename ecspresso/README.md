@@ -25,5 +25,8 @@ ecspresso v2.2.4
 % ecspresso deploy --config flask-app.yaml
 ```
 
-
+rollback
+```
+$ ecspresso rollback --config flask-app.yaml
+```
 
