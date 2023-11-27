@@ -22,6 +22,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       # AWSの権限設定
+      - runs: |
+        echo "this it enc=${{ env.AWS_ACCOUNT_ID }} and ${{ env.AWS_IAM_ROLE_NAME }}"
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
