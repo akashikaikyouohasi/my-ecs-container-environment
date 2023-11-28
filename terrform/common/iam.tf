@@ -89,7 +89,6 @@ data "aws_iam_policy_document" "ecr_ecs_deploy" {
       "codedeploy:CreateDeployment",
       "codedeploy:List*",
       "ecr:ListImages",
-      "ecr:BatchGetImage",
       "ecs:*",
       "elasticloadbalancing:DescribeTargetGroups",
       "iam:GetRole",
@@ -97,6 +96,7 @@ data "aws_iam_policy_document" "ecr_ecs_deploy" {
       "secretsmanager:GetSecretValue",
       "servicediscovery:GetNamespace",
       "ssm:GetParameter",
+      "sts:AssumeRole"
     ]
     resources = [
       "*"
