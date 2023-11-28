@@ -92,6 +92,7 @@ data "aws_iam_policy_document" "ecr_ecs_deploy" {
       "ecs:*",
       "elasticloadbalancing:DescribeTargetGroups",
       "iam:GetRole",
+      "iam:PassRole",
       "logs:GetLogEvents",
       "secretsmanager:GetSecretValue",
       "servicediscovery:GetNamespace",
