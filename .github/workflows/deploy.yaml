@@ -10,7 +10,7 @@ env:
   AWS_ECR_REPOSITORY_NAME: ${{ vars.AWS_ECR_REPOSITORY_NAME }}
 
 jobs:
-  deploy:
+  ecs-deploy:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true
     permissions:
@@ -42,11 +42,16 @@ jobs:
           docker build -t ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }} -f  ./app-flask/docker/build/Dockerfile --platform linux/x86_64 . 
           docker push ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${{ env.IMAGE_TAG }}
       # デプロイ実行環境準備
-      - uses: kayac/ecspresso@v2
+      - name: Prepare ecspresso
+        uses: kayac/ecspresso@v2
         with:
           version: latest
       # デプロイ前確認:ecspresso verify
-      ### TODO ###
+       - name: Verify the deploy
+        env:
+          IMAGE_TAG: ${{ github.sha }} # MUST env
+        run: |
+          ecspresso verify --config ecspresso/flask-app.yaml
       # デプロイ実施
       - name: Deploy to Amazon ECS
         env:
