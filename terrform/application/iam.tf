@@ -73,12 +73,32 @@ data "aws_iam_policy_document" "s3_kms_logs" {
 }
 
 ### IAM Role ###
+# アカウントID取得
+data "aws_caller_identity" "current" {}
+
 data "aws_iam_policy_document" "ecs_task_assume_role_policy" {
   statement {
     actions = ["sts:AssumeRole"]
     principals {
       type        = "Service"
       identifiers = ["ecs-tasks.amazonaws.com"]
+    }
+  }
+  statement {
+    actions = ["sts:AssumeRoleWithWebIdentity"]
+    principals {
+      type        = "Federated"
+      identifiers = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/token.actions.githubusercontent.com"]
+    }
+    condition {
+      test     = "StringEquals"
+      variable = "token.actions.githubusercontent.com:aud"
+      values   = ["sts.amazonaws.com"]
+    }
+    condition {
+      test     = "StringLike"
+      variable = "token.actions.githubusercontent.com:sub"
+      values   = ["repo:akashikaikyouohasi/my-ecs-container-environment:*"]
     }
   }
 }
