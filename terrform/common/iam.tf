@@ -88,6 +88,7 @@ data "aws_iam_policy_document" "ecr_ecs_deploy" {
       "codedeploy:BatchGet*",
       "codedeploy:CreateDeployment",
       "codedeploy:List*",
+      "ecr:ListImages",
       "ecs:*",
       "elasticloadbalancing:DescribeTargetGroups",
       "iam:GetRole",
