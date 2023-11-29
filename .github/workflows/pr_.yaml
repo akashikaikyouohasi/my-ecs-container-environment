@@ -36,12 +36,7 @@ jobs:
         env:
           IMAGE_TAG: ${{ github.sha }} # MUST env
         run:  |
-          ecspresso diff --config ecspresso/flask-app.yaml
-      # DEBUG
-      - name: View context attributes
-        uses: actions/github-script@v7
-        with:
-          script: console.log(context)
+          echo "::set-output name=result::$(ecspresso diff --config ecspresso/flask-app.yaml)"
       # PRにコメント追加
       ### GITHUB_TOKEを明示的に渡さなくてもOK。By default, github-script will use the token provided to your workflow.
       - name: Get result
@@ -49,7 +44,7 @@ jobs:
       - uses: actions/github-script@v7
         with:
           script: |
-            const output = `Terraform Plan 📖${{ steps.diff.outputs.stdout }}`;
+            const output = `Terraform Plan 📖${{ steps.diff.outputs.result }}`;
             github.rest.issues.createComment({
               issue_number: context.payload.pull_request.number,
               owner: context.repo.owner,
