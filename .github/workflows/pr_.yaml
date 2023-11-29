@@ -1,0 +1,42 @@
+on:
+  pull_request:
+    types: [opened,synchronize,reopened] # synchronizeはPRにpush時
+
+env:
+  AWS_ACCOUNT_ID: ${{ vars.AWS_ACCOUNT_ID }}
+  AWS_IAM_ROLE_ARN: ${{ vars.AWS_IAM_ROLE_ARN }}
+  AWS_ECR_REPOSITORY_NAME: ${{ vars.AWS_ECR_REPOSITORY_NAME }}
+
+jobs:
+  ci-ecs:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      
+      # ソース取得
+      - name: Checkout
+        uses: actions/checkout@v3
+      # AWSの権限設定
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ env.AWS_IAM_ROLE_ARN }}
+          aws-region: ap-northeast-1
+      # DEBUG
+      - name: View context attributes
+        uses: actions/github-script@v7
+        with:
+          script: console.log(context)
+      # PRにコメント追加
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.payload.pull_request.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '👋 Thanks for reporting!'
+            })
