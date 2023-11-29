@@ -33,7 +33,6 @@ jobs:
       # デプロイ前確認:ecspresso verify
       - name: Exec ecspresso diff
         id: diff
-        result-encoding: string
         env:
           IMAGE_TAG: ${{ github.sha }} # MUST env
         run:  |
