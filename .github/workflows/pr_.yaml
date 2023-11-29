@@ -36,7 +36,7 @@ jobs:
         env:
           IMAGE_TAG: ${{ github.sha }} # MUST env
         run:  |
-          echo "::set-output name=result::$(ecspresso diff --config ecspresso/flask-app.yaml)"
+          echo "result=$(ecspresso diff --config ecspresso/flask-app.yaml)"
       # PRにコメント追加
       ### GITHUB_TOKEを明示的に渡さなくてもOK。By default, github-script will use the token provided to your workflow.
       - name: Get result
@@ -49,5 +49,6 @@ jobs:
               issue_number: context.payload.pull_request.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: output
+              body: ${{ steps.diff.outputs.result }}
             });
+            console.log(otuput)
