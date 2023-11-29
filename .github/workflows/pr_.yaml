@@ -49,5 +49,5 @@ jobs:
               issue_number: context.payload.pull_request.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `### ecspresso diff Result¥n¥`¥`¥`¥n${diff}¥n¥`¥`¥``
+              body: `### ecspresso diff Result\n\`\`\`¥n${diff}\n\`\`\``
             });
