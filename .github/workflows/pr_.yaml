@@ -25,18 +25,32 @@ jobs:
         with:
           role-to-assume: ${{ env.AWS_IAM_ROLE_ARN }}
           aws-region: ap-northeast-1
+      # デプロイ実行環境準備
+      - name: Prepare ecspresso
+        uses: kayac/ecspresso@v2
+        with:
+          version: latest
+      # デプロイ前確認:ecspresso verify
+      - name: Exec ecspresso diff
+        id: diff
+        env:
+          IMAGE_TAG: ${{ github.sha }} # MUST env
+        run: |
+          ecspresso diff --config ecspresso/flask-app.yaml >> output.
       # DEBUG
       - name: View context attributes
         uses: actions/github-script@v7
         with:
           script: console.log(context)
       # PRにコメント追加
+      ### GITHUB_TOKEを明示的に渡さなくてもOK。By default, github-script will use the token provided to your workflow.
       - uses: actions/github-script@v7
         with:
           script: |
+            const output = `<h2>Terraform Plan 📖</h2>¥`${{ steps.diff.outputs.stdout }}¥``;
             github.rest.issues.createComment({
               issue_number: context.payload.pull_request.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '👋 Thanks for reporting!'
+              body: output
             })
