@@ -3,9 +3,10 @@
 
 ## 環境変数設定
 GitHubの`Secrets and variables`から設定してください！
-- variable
-    - AWS_ACCOUNT_ID
-    - AWS_IAM_ROLE_ARN Actionsで利用するIAMロール ARN）
+- Enviroment: development
+    - variable
+        - AWS_ACCOUNT_ID
+        - AWS_IAM_ROLE_ARN Actionsで利用するIAMロール ARN）
 
 
 # 手動コマンド集
