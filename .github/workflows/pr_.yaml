@@ -32,7 +32,7 @@ jobs:
         env:
           IMAGE_TAG: ${{ github.sha }} # MUST env
         run:  |
-          echo "### ecspresso diff output ###" > diff.txt
+          echo "ecspresso diff output" > diff.txt
           ecspresso diff --config ecspresso/flask-app.yaml >> diff.txt
       # PRにコメント追加
       ### GITHUB_TOKEを明示的に渡さなくてもOK。By default, github-script will use the token provided to your workflow.
@@ -45,5 +45,5 @@ jobs:
               issue_number: context.payload.pull_request.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `### ecspresso diff Result\n\`\`\`¥n${diff}\n\`\`\``
+              body: `## Result: ecspresso diff\n\`\`\`¥n${diff}\n\`\`\``
             });
