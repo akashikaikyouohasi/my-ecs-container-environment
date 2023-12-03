@@ -11,30 +11,6 @@ variable "name" {
 #####################
 
 #####################
-# Systems Manager Parameter Store
-####################
-locals {
-  secret_parameter = {
-    db_master_user = {
-      name  = "/${var.name}/database/master/user"
-      value = "admin"
-    }
-    db_master_password = {
-      name  = "/${var.name}/database/master/password"
-      value = "tmp"
-    }
-    db_app_user = {
-      name  = "/${var.name}/database/flaskapp/user"
-      value = "user1"
-    }
-    db_app_password = {
-      name  = "/${var.name}/database/flaskapp/password"
-      value = "tmp"
-    }
-  }
-}
-
-#####################
 # ECR
 #####################
 locals {
@@ -109,5 +85,42 @@ locals {
       health_check = "/"
       port         = "80"
     }
+  }
+}
+
+#####################
+# Aurora
+#####################
+locals {
+  aurora = {
+    db_subnet_group_name = "${var.name}-rds-subnet-group"
+    subnet_ids = [
+      data.terraform_remote_state.common.outputs.private_subnets["${var.name}-private-db-1a"],
+      data.terraform_remote_state.common.outputs.private_subnets["${var.name}-private-db-1c"]
+    ]
+
+    engine             = "aurora-mysql"
+    engine_version     = "8.0.mysql_aurora.3.04.1"
+    cluster_identifier = "${var.name}-db"
+    master_username    = "admin"
+
+    instance_class = "db.t3.medium"
+    instances = {
+      db1 = {
+        identifier = "${var.name}-db-instance-1"
+      }
+      db2 = {
+        identifier = "${var.name}-db-instance-2"
+      }
+    }
+
+    vpc_security_group_ids = [
+      data.terraform_remote_state.common.outputs.sg["db"]
+    ]
+    database_name = "user"
+
+    backup_retention_period = 1
+    monitoring_iam_role     = "${var.name}-rds-monitoring-role"
+
   }
 }
