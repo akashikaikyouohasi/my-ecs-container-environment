@@ -84,6 +84,7 @@ data "aws_iam_policy_document" "ecs_task_assume_role_policy" {
       identifiers = ["ecs-tasks.amazonaws.com"]
     }
   }
+  # ecspresso verifyのために、GitHub ActionsのIAMロールからのAssumeRoleを許可
   statement {
     effect = "Allow"
     actions = ["sts:AssumeRole"]
