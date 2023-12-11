@@ -83,6 +83,13 @@ locals {
       source_security_group_id = null
       cidr_blocks              = "0.0.0.0/0"
     }
+    alb2 = {
+      sg                       = "alb"
+      port                     = 10080
+      protocol                 = "tcp"
+      source_security_group_id = null
+      cidr_blocks              = "0.0.0.0/0"
+    }
     app = {
       sg                       = "app"
       port                     = 80

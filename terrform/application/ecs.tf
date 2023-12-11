@@ -30,9 +30,10 @@ resource "aws_ecs_service" "frontend" {
     # プラットフォームのバージョン
     platform_version = "1.4.0"
     # タスク定義
-    task_definition = "flask-test-app:5"
+    task_definition = "flask-test-app:15"
+    
 
-    iam_role                           = "/aws-service-role/ecs.amazonaws.com/AWSServiceRoleForECS"
+    #iam_role                           = "/aws-service-role/ecs.amazonaws.com/AWSServiceRoleForECS"
 
     # ECSで管理されたタグを有効にする
     enable_ecs_managed_tags            = true
@@ -50,17 +51,18 @@ resource "aws_ecs_service" "frontend" {
     triggers                           = {}
     wait_for_steady_state              = null
 
-    deployment_circuit_breaker {
-        enable   = true
-        rollback = true
-    }
+    # deployment_circuit_breaker {
+    #     enable   = true
+    #     rollback = true
+    # }
     deployment_controller {
-        type = "ECS"
+        #type = "ECS"
+        type = "CODE_DEPLOY"
     }
     load_balancer {
         container_name   = "flask"
         container_port   = 80
-        target_group_arn = aws_lb_target_group.frontend_alb["frontend_alb"].arn
+        target_group_arn = aws_lb_target_group.frontend_alb.arn
     }
 
     # ネットワーク構成
@@ -72,6 +74,6 @@ resource "aws_ecs_service" "frontend" {
     }
 
     lifecycle {
-        ignore_changes = [desired_count, task_definition]
+        ignore_changes = [desired_count, task_definition, load_balancer]
     }
 }

@@ -124,3 +124,34 @@ resource "aws_iam_policy_attachment" "ecs_task" {
   roles      = [aws_iam_role.github_actions_ecs_deploy.name]
   policy_arn = aws_iam_policy.ecr_ecs_deploy.arn
 }
+
+# bastion
+resource "aws_iam_role" "ssm_role" {
+  name               = "${var.name}-SSMRole"
+  assume_role_policy = data.aws_iam_policy_document.assume_role.json
+}
+
+resource "aws_iam_role_policy_attachment" "default" {
+  role       = aws_iam_role.ssm_role.name
+  policy_arn = data.aws_iam_policy.systems_manager.arn
+}
+
+data "aws_iam_policy" "systems_manager" {
+  arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+}
+
+data "aws_iam_policy_document" "assume_role" {
+  statement {
+    actions = ["sts:AssumeRole"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["ec2.amazonaws.com"]
+    }
+  }
+}
+
+resource "aws_iam_instance_profile" "systems_manager" {
+  name = "${var.name}-SSMRole"
+  role = aws_iam_role.ssm_role.name
+}
