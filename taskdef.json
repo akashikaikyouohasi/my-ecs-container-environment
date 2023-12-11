@@ -1,0 +1,126 @@
+{
+    "taskDefinitionArn": "arn:aws:ecs:ap-northeast-1:206863353204:task-definition/flask-test-app:15",
+    "containerDefinitions": [
+        {
+            "name": "flask",
+            "image": "<IMAGE1_NAME>",
+            "cpu": 256,
+            "memory": 512,
+            "memoryReservation": 512,
+            "portMappings": [
+                {
+                    "name": "flask-80-tcp",
+                    "containerPort": 80,
+                    "hostPort": 80,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
+                }
+            ],
+            "essential": true,
+            "environment": [
+                {
+                    "name": "MYSQL_HOST",
+                    "value": "flask-test-db.cluster-crbnkhlt6tvg.ap-northeast-1.rds.amazonaws.com"
+                },
+                {
+                    "name": "MYSQL_DATABASE",
+                    "value": "user"
+                }
+            ],
+            "environmentFiles": [],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "secrets": [
+                {
+                    "name": "MYSQL_PASSWORD",
+                    "valueFrom": "arn:aws:secretsmanager:ap-northeast-1:206863353204:secret:rds!cluster-46b60c0c-0e60-4bfb-b1ae-0b0d6a58852b-G7lCRI:password::"
+                },
+                {
+                    "name": "MYSQL_USER",
+                    "valueFrom": "arn:aws:secretsmanager:ap-northeast-1:206863353204:secret:rds!cluster-46b60c0c-0e60-4bfb-b1ae-0b0d6a58852b-G7lCRI:username::"
+                }
+            ],
+            "readonlyRootFilesystem": true,
+            "ulimits": [],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-create-group": "true",
+                    "awslogs-group": "/flask-test/container-logs",
+                    "awslogs-region": "ap-northeast-1",
+                    "awslogs-stream-prefix": "ecs"
+                },
+                "secretOptions": []
+            }
+        }
+    ],
+    "family": "flask-test-app",
+    "taskRoleArn": "arn:aws:iam::206863353204:role/flask-test-EcsTaskRole",
+    "executionRoleArn": "arn:aws:iam::206863353204:role/flask-test-EcsTaskRole",
+    "networkMode": "awsvpc",
+    "revision": 15,
+    "volumes": [],
+    "status": "ACTIVE",
+    "requiresAttributes": [
+        {
+            "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+        },
+        {
+            "name": "ecs.capability.execution-role-awslogs"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.ecr-auth"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+        },
+        {
+            "name": "ecs.capability.secrets.asm.environment-variables"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.17"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.21"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.task-iam-role"
+        },
+        {
+            "name": "ecs.capability.execution-role-ecr-pull"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+        },
+        {
+            "name": "ecs.capability.task-eni"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
+        }
+    ],
+    "placementConstraints": [],
+    "compatibilities": [
+        "EC2",
+        "FARGATE"
+    ],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "256",
+    "memory": "512",
+    "runtimePlatform": {
+        "cpuArchitecture": "X86_64",
+        "operatingSystemFamily": "LINUX"
+    },
+    "tags": [
+        {
+            "key": "env",
+            "value": "dev"
+        },
+        {
+            "key": "project_name",
+            "value": "my-ecs"
+        }
+    ]
+}
